@@ -17,8 +17,7 @@ class LEDControlView : View() {
         tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
 
         tab("Fill") {
-            colorPicker = colorpicker() {
-            }
+            add(find<FillModeView>())
         }
     }
 

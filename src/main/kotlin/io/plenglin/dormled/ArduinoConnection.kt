@@ -4,9 +4,11 @@ import com.fazecast.jSerialComm.SerialPort
 import java.io.PrintStream
 import java.util.*
 import java.util.concurrent.locks.ReentrantLock
+import java.util.logging.Logger
 import kotlin.concurrent.withLock
 
 class ArduinoConnection(val serialPort: SerialPort) : AutoCloseable {
+    private val logger = Logger.getLogger(javaClass.canonicalName)
 
     init {
         serialPort.openPort()
@@ -15,8 +17,14 @@ class ArduinoConnection(val serialPort: SerialPort) : AutoCloseable {
     private val tx = PrintStream(serialPort.outputStream)
     private val timer = Timer()
 
-    fun write(cmd: String) {
+    private fun write(cmd: String) {
+        logger.fine { "Sending: $cmd" }
         tx.println(cmd)
+    }
+
+    fun fill(r: Int, g: Int, b: Int) {
+        logger.info { "Setting color to $r $g $b" }
+        tx.println("fill $r $g $b")
     }
 
     override fun close() {
