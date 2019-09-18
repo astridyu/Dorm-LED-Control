@@ -6,12 +6,15 @@ import tornadofx.View
 import tornadofx.borderpane
 
 class MainWindowView : View() {
+    private val controller: BluetoothController by inject()
+
     override val root: Parent = borderpane {
         top<BluetoothSelectionView>()
         center<LEDControlView>()
     }
 
     override fun onDelete() {
+        controller.connection?.close()
         Platform.exit()
     }
 }

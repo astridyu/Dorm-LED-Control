@@ -1,5 +1,6 @@
 package io.plenglin.dormled
 
+import javafx.geometry.Insets
 import javafx.geometry.Orientation
 import javafx.scene.Parent
 import javafx.scene.control.Slider
@@ -15,6 +16,7 @@ class FillModeView : View() {
     lateinit var b: Slider
 
     override val root: Parent = gridpane {
+        paddingAll = 10.0
         row {
             label("Red")
             r = slider(0, 1, 0) {
