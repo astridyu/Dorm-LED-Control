@@ -1,4 +1,4 @@
-package io.plenglin.dormled
+package io.github.plenglin.dormled
 
 import com.fazecast.jSerialComm.SerialPort
 import java.io.PrintStream

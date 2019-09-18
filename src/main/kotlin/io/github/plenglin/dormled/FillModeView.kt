@@ -1,4 +1,4 @@
-package io.plenglin.dormled
+package io.github.plenglin.dormled
 
 import javafx.geometry.Insets
 import javafx.geometry.Orientation

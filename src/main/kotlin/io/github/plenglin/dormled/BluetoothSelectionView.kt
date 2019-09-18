@@ -1,7 +1,7 @@
-package io.plenglin.dormled
+package io.github.plenglin.dormled
 
 import com.fazecast.jSerialComm.SerialPort
-import io.plenglin.dormled.BluetoothController.Companion.LAST_CONNECTED_PORT
+import io.github.plenglin.dormled.BluetoothController.Companion.LAST_CONNECTED_PORT
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.scene.Parent
@@ -21,7 +21,7 @@ class BluetoothSelectionView : View() {
     }
     private val bluetoothPorts: ObservableList<SerialPortViewModel> = FXCollections.observableArrayList(
         *SerialPort.getCommPorts()
-            .map(::SerialPortViewModel)
+            .map(BluetoothSelectionView::SerialPortViewModel)
             .sortedBy { it.port.systemPortName }
             .toTypedArray()
     )
