@@ -4,7 +4,7 @@ import tornadofx.App
 import tornadofx.launch
 
 
-class DormLEDControl: App(LEDControlView::class)
+class DormLEDControl: App(MainWindowView::class)
 
 fun main() {
     launch<DormLEDControl>()
