@@ -1,6 +1,7 @@
 package io.plenglin.dormled
 
 import com.fazecast.jSerialComm.SerialPort
+import io.plenglin.dormled.BluetoothController.Companion.LAST_CONNECTED_PORT
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.scene.Parent
@@ -29,17 +30,18 @@ class BluetoothSelectionView : View() {
 
     override val root: Parent = hbox {
         label(text = "Serial port")
-        selector = combobox(values = bluetoothPorts)
+        selector = combobox(values = bluetoothPorts) {
+            connectionController.prefs.get(LAST_CONNECTED_PORT, null)?.let { defaultPort ->
+                val index = bluetoothPorts.indexOfFirst { it.port.systemPortName == defaultPort }
+                selectionModel.select(index)
+            }
+        }
         button(text = "Connect") {
+            disableProperty().bind(connectionController.isConnectingProperty)
             action {
                 val selected = selector.selectedItem ?: return@action
                 logger.info { "Selected comm port $selected" }
-                isDisable = true
-                runAsync {
-                    connectionController.connection = ArduinoConnection(selected.port)
-                } finally {
-                    isDisable = false
-                }
+                connectionController.connectTo(selected.port)
             }
         }
     }

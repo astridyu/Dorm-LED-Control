@@ -31,6 +31,7 @@ class ArduinoConnection(val serialPort: SerialPort) : AutoCloseable {
     }
 
     override fun close() {
+        logger.info("Closing")
         tx.close()
     }
 

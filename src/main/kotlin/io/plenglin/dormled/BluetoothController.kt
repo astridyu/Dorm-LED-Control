@@ -1,6 +1,8 @@
 package io.plenglin.dormled
 
 import com.fazecast.jSerialComm.SerialPort
+import javafx.beans.property.BooleanProperty
+import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleObjectProperty
 import javafx.concurrent.Task
 import tornadofx.*
@@ -16,9 +18,28 @@ class BluetoothController : Controller(), AutoCloseable {
     val connectionProperty = SimpleObjectProperty<ArduinoConnection?>()
     var connection: ArduinoConnection? by connectionProperty
 
+    val isConnectingProperty = connectingTaskProperty.isNotNull
+
     val prefs = Preferences.userNodeForPackage(DormLEDControl::class.java)
+
+    fun connectTo(port: SerialPort) {
+        connectingTask = runAsync {
+            try {
+                connection?.close()
+                connection = ArduinoConnection(port)
+                prefs.put(LAST_CONNECTED_PORT, port.systemPortName)
+                prefs.flush()
+            } finally {
+                connectingTask = null
+            }
+        }
+    }
 
     override fun close() {
         connection?.close()
+    }
+
+    companion object {
+        const val LAST_CONNECTED_PORT = "last-connected-port"
     }
 }
