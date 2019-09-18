@@ -23,8 +23,11 @@ class ArduinoConnection(val serialPort: SerialPort) : AutoCloseable {
     }
 
     fun fill(r: Int, g: Int, b: Int) {
-        logger.info { "Setting color to $r $g $b" }
         tx.println("fill $r $g $b")
+    }
+
+    fun hue(delta: Int, step: Int, period: Int) {
+        tx.println("hue $delta $step $period")
     }
 
     override fun close() {

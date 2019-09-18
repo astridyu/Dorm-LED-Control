@@ -19,9 +19,8 @@ class LEDControlView : View() {
         tab("Fill") {
             add(find<FillModeView>())
         }
-    }
-
-    override fun onBeforeShow() {
-        //find<BluetoothSelector>().openModal(stageStyle = StageStyle.UTILITY, block = true)
+        tab("Hue") {
+            add(find<HueModeView>())
+        }
     }
 }
