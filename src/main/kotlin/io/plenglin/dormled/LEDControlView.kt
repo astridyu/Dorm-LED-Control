@@ -1,12 +1,8 @@
 package io.plenglin.dormled
 
-import com.fazecast.jSerialComm.SerialPort
-import javafx.beans.Observable
-import javafx.beans.value.ObservableValue
 import javafx.scene.Parent
+import javafx.scene.control.ColorPicker
 import javafx.scene.control.TabPane
-import javafx.stage.Modality
-import javafx.stage.StageStyle
 import tornadofx.*
 import java.util.logging.Logger
 
@@ -14,11 +10,15 @@ class LEDControlView : View() {
     private val logger = Logger.getLogger(javaClass.canonicalName)
     private val bluetoothController: BluetoothController by inject()
 
+    private lateinit var colorPicker: ColorPicker
+
     override val root: Parent = tabpane {
+        enableWhen(bluetoothController.connectionProperty.isNotNull)
         tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
 
         tab("Fill") {
-            label("test")
+            colorPicker = colorpicker() {
+            }
         }
     }
 
